@@ -1,5 +1,7 @@
 # IntelliTest 🤖
 
+[![CI](https://github.com/aiqualitylab/IntelliTest/actions/workflows/ci.yml/badge.svg)](https://github.com/aiqualitylab/IntelliTest/actions/workflows/ci.yml)
+
 AI-powered test automation that lets you write tests in plain English. No complex code required.
 
 ## What is IntelliTest?
