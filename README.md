@@ -26,7 +26,7 @@ No need to write complex validation code - just describe what you want to check.
 Clone and configure:
 ```bash
 git clone https://github.com/aiqualitylab/IntelliTest.git
-cd AI.Powered.Reqnroll.Nunit
+cd IntelliTest
 ```
 
 Add your OpenAI API key to `appsettings.json`:
