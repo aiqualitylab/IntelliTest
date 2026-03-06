@@ -1,0 +1,10 @@
+{
+  "$schema": "https://schemas.reqnroll.net/reqnroll-config-latest.json",
+  "formatters": {
+    "expressium": {
+      "outputFilePath": "TestResults/LivingDoc.ndjson",
+      "outputFileTitle": "IntelliTest – AI-Powered Test Automation",
+      "historyPath": "TestResults/History/*.ndjson"
+    }
+  }
+}
