@@ -43,25 +43,13 @@ jobs:
 
       - name: Test
         env:
-          OPENAI__APIKEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
         run: dotnet test IntelliTest.csproj --no-build --configuration Release
         continue-on-error: true
 
-      - name: Clone LivingDoc
-        run: git clone https://github.com/ExpressiumOSS/Expressium.LivingDoc.git
-
       - name: Find NDJSON
-        run: find . -name "LivingDoc.ndjson"
-
-      - name: Generate LivingDoc HTML
-        run: |
-          NDJSON=$(find . -name "LivingDoc.ndjson" | head -1)
-          dotnet run --project Expressium.LivingDoc/Expressium.LivingDoc.Cli \
-            -- --generate \
-            --input "$NDJSON" \
-            --output LivingDoc.html \
-            --title "IntelliTest"
+        run: find . -name "LivingDoc.html"
 
       - name: Upload Report
         if: always()
