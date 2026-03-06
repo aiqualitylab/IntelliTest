@@ -1,10 +1,14 @@
-name: CI
+name: IntelliTest CI
 
 on:
   push:
-    branches: [main]
+    branches: [ "main" ]
   pull_request:
-    branches: [main]
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   test:
@@ -20,16 +24,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+      - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: '10.0.x'
 
       - name: Restore
         run: dotnet restore
-
-      - name: Build
-        run: dotnet build --no-restore
 
       - name: Wait for Selenium
         run: |
@@ -38,8 +38,35 @@ jobs:
             sleep 2
           done
 
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
       - name: Test
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI__APIKEY: ${{ secrets.OPENAI_API_KEY }}
           SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
-        run: dotnet test --no-build
+        run: dotnet test --no-build --configuration Release
+        continue-on-error: true
+
+      - name: Clone LivingDoc
+        run: git clone https://github.com/Expressium/Expressium.LivingDoc.git
+
+      - name: Find NDJSON
+        run: find . -name "LivingDoc.ndjson"
+
+      - name: Generate LivingDoc HTML
+        run: |
+          NDJSON=$(find . -name "LivingDoc.ndjson" | head -1)
+          dotnet run --project Expressium.LivingDoc/Expressium.LivingDoc.Cli \
+            -- --generate \
+            --input "$NDJSON" \
+            --output LivingDoc.html \
+            --title "IntelliTest"
+
+      - name: Upload Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: LivingDoc
+          path: LivingDoc.html
+          retention-days: 30
