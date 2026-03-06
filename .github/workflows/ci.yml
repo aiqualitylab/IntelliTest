@@ -45,7 +45,7 @@ jobs:
         env:
           OPENAI__APIKEY: ${{ secrets.OPENAI_API_KEY }}
           SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
-        run: dotnet test --no-build --configuration Release
+        run: dotnet test IntelliTest.csproj --no-build --configuration Release
         continue-on-error: true
 
       - name: Clone LivingDoc
