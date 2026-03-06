@@ -48,7 +48,7 @@ jobs:
         run: dotnet test IntelliTest.csproj --no-build --configuration Release
         continue-on-error: true
 
-      - name: Find NDJSON
+      - name: Find HTML
         run: find . -name "LivingDoc.html"
 
       - name: Upload Report
