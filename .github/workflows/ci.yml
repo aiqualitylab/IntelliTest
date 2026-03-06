@@ -49,7 +49,7 @@ jobs:
         continue-on-error: true
 
       - name: Clone LivingDoc
-        run: git clone https://github.com/Expressium/Expressium.LivingDoc.git
+        run: git clone https://github.com/ExpressiumOSS/Expressium.LivingDoc.git
 
       - name: Find NDJSON
         run: find . -name "LivingDoc.ndjson"
